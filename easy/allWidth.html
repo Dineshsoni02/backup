@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All charset width</title>
+  </head>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: aliceblue;
+    }
+    .btn {
+      padding: 9px 20px;
+    }
+  </style>
+  <body>
+    <button class="btn">Show</button>
+  </body>
+  <script>
+    const charArr = [];
+    const showAll = () => {
+      for (let i = 0; i <= 127; i++) {
+        charArr[i] = String.fromCharCode(i);
+      }
+
+      let text = document.createElement("p");
+      document.body.appendChild(text);
+      text.style.position = "absolute";
+      text.style.top = 22 + "px";
+      text.style.left = 22 + "px";
+      for (let i = 0; i <= 127; i++) {
+        text.innerHTML = charArr[i];
+        width = text.getBoundingClientRect().width;
+        // width = window.getComputedStyle(text).width;
+        console.log({ ...text.innerHTML, width });
+      }
+    };
+
+    document.querySelector(".btn").addEventListener("click", showAll);
+  </script>
+</html>

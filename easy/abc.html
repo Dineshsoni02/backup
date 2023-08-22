@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+   
+  </head>
+  <body>
+   <h5></h5>
+    
+<script>
+
+  function outer(){
+    let counter=0;
+    function inner(){
+      counter++;
+      console.log(counter);
+    }
+     return inner;
+  }
+const newf = outer();  
+//curring
+let a,b;
+function sum(a,b){
+  return a+b;
+}
+// console.log(sum(10,20))
+
+function ad(a){
+  return function ba(b){
+   
+    return a+b;
+  }
+}
+const ad2 = ad(2);
+const ad3 = ad(3);
+const ad4 = ad(4);
+// console.log(ad2(2),ad3(3),ad4(3))
+
+for (var i = 0; i < 5; i++) {
+    // setTimeout(()=> console.log("i",i),1000)   
+}
+
+for (let i = 0; i < 5; i++) {
+    // setTimeout(()=> console.log("i",i),1000)  
+}
+</script>
+
+  </body>
+  
+</html>

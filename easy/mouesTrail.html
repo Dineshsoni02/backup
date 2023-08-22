@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mouse Trail image</title>
+  </head>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: rgb(15, 15, 15);
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .images img {
+      position: absolute;
+      max-width: 190px;
+      max-height: 250px;
+
+      background-position: center;
+      background-size: contain;
+      left: -200px;
+      top: -200px;
+      transition: 400ms opacity;
+    }
+    .images img[data-status="inactive"] {
+      opacity: 0;
+    }
+    .images img[data-status="active"] {
+      opacity: 1;
+    }
+  </style>
+
+  <body>
+    <div class="images">
+      <img
+        src="https://plus.unsplash.com/premium_photo-1673827679989-fe83853fca1c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60"
+        alt="img"
+        data-status="inactive"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1680668414134-b8ad7140b8dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+        alt="img"
+        data-status="inactive"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1680634207631-99f1b33e2873?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+        alt="img"
+        data-status="inactive"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1680634207631-99f1b33e2873?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+        alt="img"
+        data-status="inactive"
+      />
+      <img
+        src="https://plus.unsplash.com/premium_photo-1679026956879-05c0a4e63f3a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDExfGJvOGpRS1RhRTBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        alt="img"
+        data-status="inactive"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1679843309674-925955199413?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfGJvOGpRS1RhRTBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        alt="img"
+        data-status="inactive"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1679943087717-1baf25721d73?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDIwfGJvOGpRS1RhRTBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        alt="img"
+        data-status="inactive"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1679589102491-bc489d798a5e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDMyfGJvOGpRS1RhRTBZfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+        alt="img"
+        data-status="inactive"
+      />
+    </div>
+
+    <script>
+      const images = document.querySelectorAll(".images img");
+
+      let leadIndex = 0,
+        lastPos = { x: 0, y: 0 };
+      const checkDis = (x1, x2, y1, y2) => {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+      };
+      const handleMouseMove = (e) => {
+        const x = e.clientX;
+        const y = e.clientY;
+        const pos = checkDis(x, lastPos.x, y, lastPos.y);
+        if (pos < 100) return;
+
+        images[leadIndex].style.top = `${y}px`;
+        images[leadIndex].style.left = `${x}px`;
+        images[leadIndex].dataset.status = "active";
+        images[leadIndex].style.zIndex = "100";
+
+        images[(images.length + leadIndex - 5) % images.length].style.zIndex =
+          "10";
+        images[(images.length + leadIndex - 5) % images.length].dataset.status =
+          "inactive";
+
+        leadIndex = (leadIndex + 1) % images.length;
+
+        lastPos.x = x;
+        lastPos.y = y;
+      };
+    
+
+      document.body.onmousemove = handleMouseMove;
+      document.body.ontouchmove = handleMouseMove;
+    </script>
+  </body>
+</html>

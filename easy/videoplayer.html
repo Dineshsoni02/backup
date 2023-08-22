@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Player</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .btn:hover {
+      cursor: pointer;
+    }
+
+    .player {
+      width: 100%;
+      height: 100vh;
+      /* overflow: hidden; */
+    }
+    .video {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+    .controls {
+      width: 100%;
+      height: 3rem;
+      position: absolute;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: #f1f5f0;
+      bottom: 0;
+      /* overflow: hidden; */
+      /* transform: translateY(100%) translateY(-5px); */
+    }
+    .player:hover .controls {
+      transform: translateY(0);
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-runnable-track {
+      background: #d1d1d1;
+      height: 1rem;
+      border-radius: 10px;
+    }
+  </style>
+  <body>
+    <div class="main">
+      <div class="player">
+        <video class="video" src="./images/652333414.mp4" loop></video>
+      </div>
+      <div class="controls">
+        <div class="playPause btn">►</div>
+        <input
+          class="rangeBar"
+          name="volume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.0"
+        />
+        <input
+          class="rangeBar"
+          name="playbackRate"
+          type="range"
+          min="0.5"
+          step="0.25"
+          max="3"
+          value="1"
+        />
+        <div class="fullscreen btn">[ ]</div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let player = document.querySelector(".player");
+    let video = document.querySelector(".video");
+    let playPause = document.querySelector(".playPause");
+    let fullscreen = document.querySelector(".fullscreen");
+    let handles = document.querySelectorAll(".rangeBar");
+
+    const playPausefn = () => {
+      const method = video.paused ? "play" : "pause";
+      video[method]();
+      if (video.paused) {
+        playPause.innerHTML = "❚ ❚";
+      } else {
+        playPause.innerHTML = "►";
+      }
+    };
+    const handlefullscr = () => {
+      document.documentElement.requestFullscreen();
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    };
+    // console.log(handles);
+    const updateValue = (e) => {
+      video[e.target.name] = e.target.value;
+      // console.log(e.target.name, e.target.value);
+    };
+
+    playPause.addEventListener("click", playPausefn);
+    fullscreen.addEventListener("click", handlefullscr);
+    video.addEventListener("click", playPausefn);
+    handles.forEach((handle) => handle.addEventListener("change", updateValue));
+    handles.forEach((handle) =>
+      handle.addEventListener("mousemove", updateValue)
+    );
+  </script>
+</html>
